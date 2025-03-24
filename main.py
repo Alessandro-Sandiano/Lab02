@@ -27,12 +27,15 @@ while True:
 
     match int(txtIn):
         case 1:
+            print("Ok, quale parola devo aggiungere?")
             result = t.handleAdd()
             if result == -1:
                 continue
             print(result)
+            print("Premere un qualunque tasto per continuare: \n")
+            input()
         case 2:
-            print("Inserire la parola aliena da cercare:")
+            print("Ok, quale parola devo cercare?")
             print(t.handleTranslate(input()))
             print("Premere un qualunque tasto per continuare: \n")
             input()

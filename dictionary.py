@@ -7,10 +7,16 @@ class Dictionary:
         string=""
         for i in range(len(self.entries)-1):
             for j in range(len(self.entries[i])-1):
+                if j == 0: string += "Parola aliena: "
+                if j == 1: string += "  Traduzione/i: "
                 string += (f"{self.entries[i][j]} ")
+            if len(self.entries[i]) == 2: string += "  Traduzione/i: "
             string += (f"{self.entries[i][len(self.entries[i])-1]}\n")
         for j in range(len(self.entries[len(self.entries)-1])-1):
+            if j == 0: string += "Parola aliena: "
+            if j == 1: string += "  Traduzione/i: "
             string += (f"{self.entries[len(self.entries)-1][j]} ")
+        if len(self.entries[len(self.entries)-1]) == 2: string += "  Traduzione/i: "
         string += (f"{self.entries[len(self.entries) - 1][len(self.entries[len(self.entries) - 1])-1]}\n")
         return string
 
@@ -22,7 +28,7 @@ class Dictionary:
         :return: int -1 in caso di ritorno al menù principale; str in tutti gli altri casi
         """
         while True:
-            print("Inserire la nuova parola con la/e relativa/e traduzione/i, usando uno spazio per separarle.\n"
+            print("Inserire la nuova parola con la/e relativa/e traduzione/i usando uno spazio per separarle.\n"
                   "È anche possibile inserire nuove traduzioni di una parola già presente nel dizionario.\n"
                   "Sono ammessi solo caratteri alfabetici.\n")
             string = input().lower()

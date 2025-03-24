@@ -6,11 +6,15 @@ class Translator:
         self.d = dictionary.Dictionary()
 
     def printMenu(self):
-        print ("1. Aggiungi nuova parola")
-        print ("2. Cerca una traduzione")
-        print ("3. Cerca con wildcard")
-        print ("4. Stampa tutto il dizionario")
-        print ("5. Exit")
+        print ("______________________________\n" +
+              "   Translator Alien-Italian\n"+
+              "______________________________\n" +
+              "1. Aggiungi nuova parola\n" +
+              "2. Cerca una traduzione\n" +
+              "3. Cerca con wildcard\n" +
+              "4. Stampa tutto il Dizionario\n" +
+              "5. Exit\n"+
+              "______________________________\n")
 
     def loadDictionary(self, dict):
         # dict is a string with the filename of the dictionary
