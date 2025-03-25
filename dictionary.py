@@ -1,10 +1,16 @@
 class Dictionary:
     def __init__(self):
         self.entries = [[]]
+        #questo attributo consente di usare file di testo con qualunque nome
         self.name = ""
 
     def __str__(self):
         string=""
+        # attenzione al documento vuoto!
+        if len(self.entries) == 0: return "Il dizionario in questione è vuoto.\n"
+        #istruzione che consente l'esecuzione del programma in caso di mancato caricamento del dizionario nel main;
+        #di default, infatti, len(self.entries) = 1 e len(self.entries[0]) == 0
+        if len(self.entries) == 1 and len(self.entries[0]) == 0: return "Non è stato caricato alcun dizionario.\n"
         for i in range(len(self.entries)-1):
             for j in range(len(self.entries[i])-1):
                 if j == 0: string += "Parola aliena: "
@@ -89,11 +95,30 @@ class Dictionary:
                         self.entries[i].append(splittedString[j])
                         nAddedWords += 1
                     j += 1
-                if nAddedWords == 0: return "Tutte le traduzioni erano già presenti, quindi non ne sono state aggiunte.\n"
-                if nAddedWords == 1: return f"È stata aggiunta {nAddedWords} nuova traduzione.\n"
-                return f"Sono state aggiunte {nAddedWords} nuove traduzioni.\n"
+                break
             i += 1
-        self.entries.append(splittedString)
+        # per ragioni di efficienza, evito di riscrivere il file di testo del dizionario in caso di nessuna modifica
+        if i < len(self.entries) and nAddedWords == 0:
+            return "Tutte le traduzioni erano già presenti, quindi non ne sono state aggiunte.\n"
+        if i == len(self.entries):
+            self.entries.append(splittedString)
+            #aggiorno la variabile i; istruzione equivalente, in questo caso, a i += 1
+            i = len(self.entries)
+        # riscrivo il file di testo del dizionario per aggiornarlo
+        file = open(f"{self.name}.txt", "w", encoding="utf-8")
+        for j in range(len(self.entries) - 1):
+            for k in range(len(self.entries[j]) - 1):
+                file.write(f"{self.entries[j][k]} ")
+            file.write(f"{self.entries[j][len(self.entries[j]) - 1]}\n")
+        for k in range(len(self.entries[len(self.entries) - 1]) - 1):
+            file.write(f"{self.entries[len(self.entries) - 1][k]} ")
+        file.write(f"{self.entries[len(self.entries) - 1][len(self.entries[len(self.entries) - 1]) - 1]}")
+        file.close()
+        #i < len(self.entries) è sempre verificata quando nAddedWords == 1, quindi è una condizione superflua
+        if nAddedWords == 1: return f"È stata aggiunta {nAddedWords} nuova traduzione.\n"
+        #se sono arrivato fin qui, vuol dire che nAddedWords > 1, quindi essa è una condizione superflua
+        if i < len(self.entries): return f"Sono state aggiunte {nAddedWords} nuove traduzioni.\n"
+        # se sono arrivato fin qui, vuol dire che i == len(self.entries), quindi essa è una condizione superflua
         if len(splittedString) == 2:
             return "La nuova voce è stata aggiunta al dizionario con la relativa traduzione.\n"
         return f"La nuova voce è stata aggiunta al dizionario con le {len(splittedString)-1} traduzioni inserite.\n"
@@ -135,3 +160,12 @@ class Dictionary:
         if nFoundWords == 0: return "Nessuna parola trovata.\n"
         if nFoundWords == 1: return "Una parola trovata:\n" + string
         return "Più di una parola trovata:\n" + string
+
+    def load(self, dict):
+        # dict is a string with the filename of the dictionary
+        self.name = dict
+        file = open(f"{self.name}.txt", "r", encoding="utf-8")
+        self.entries = file.readlines()
+        file.close()
+        for i in range(len(self.entries)):
+            self.entries[i] = self.entries[i].split()

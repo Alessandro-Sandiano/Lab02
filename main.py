@@ -8,7 +8,6 @@ while True:
     t.printMenu()
     t.d.name = "dictionary"
     t.loadDictionary(t.d.name)
-
     txtIn = input()
 
     # Add input control here!
