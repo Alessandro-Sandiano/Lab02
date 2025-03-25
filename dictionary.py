@@ -30,7 +30,6 @@ class Dictionary:
         """
         Metodo che aggiunge nuove parole al dizionario. In caso di errore di inserimento, all'utente viene chiesto
         di riprovare o di ritornare al menù principale.
-        :param word: nuova parola con la/e relativa/e traduzione/i
         :return: int -1 in caso di ritorno al menù principale; str in tutti gli altri casi
         """
         while True:
